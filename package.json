@@ -1,0 +1,14 @@
+{
+  "name": "webglpbr",
+  "version": "1.0.0",
+  "description": "A WebGL Physical Based Renderer",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lewis Spencer",
+  "license": "ISC",
+  "dependencies": {
+    "pex-cam": "^2.8.0"
+  }
+}
