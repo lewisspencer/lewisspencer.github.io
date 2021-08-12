@@ -1425,7 +1425,7 @@ function main() {
 
   var actors = [
     new RotatingCube(gl),
-    new RotatingCube(gl),
+    new RotatingCubeNormalMapping(gl),
     new StaticCube(gl),
     new SkyBox(gl),
   ];

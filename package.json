@@ -9,6 +9,16 @@
   "author": "Lewis Spencer",
   "license": "ISC",
   "dependencies": {
-    "pex-cam": "^2.8.0"
-  }
+    "pex-cam": "^2.8.0",
+    "watchify": "^4.0.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lewisspencer/lewisspencer.github.io.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lewisspencer/lewisspencer.github.io/issues"
+  },
+  "homepage": "https://github.com/lewisspencer/lewisspencer.github.io#readme"
 }

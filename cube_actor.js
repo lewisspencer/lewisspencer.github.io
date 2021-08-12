@@ -15,6 +15,24 @@ class RotatingCube extends Actor {
   }
 }
 
+class RotatingCubeNormalMapping extends Actor {
+  constructor(gl) {
+    const cube = new Cube(gl);
+    const normalMaterial = new NormalMaterial(
+      gl,
+      loadTexture(gl, "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/brick.jpg"),
+      loadTexture(gl, "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/brick_normal.jpg")
+    );
+    super(cube, normalMaterial);
+  }
+
+  tick(deltaTime) {
+    const rotationFactor = 0.3;
+    quat.rotateY(this.rotation, this.rotation, deltaTime * rotationFactor);
+    quat.rotateX(this.rotation, this.rotation, deltaTime * rotationFactor);
+  }
+}
+
 class StaticCube extends Actor {
   constructor(gl) {
     const cube = new Cube(gl);

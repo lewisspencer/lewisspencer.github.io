@@ -1,10 +1,12 @@
-class PhongMaterial extends Material {
-  constructor(gl, colourTexture) {
+class NormalMaterial extends Material {
+  constructor(gl, colourTexture, normalTexture) {
     const vsSource = `
     attribute vec3 aVertexPosition;
     attribute vec4 aVertexColour;
     attribute vec2 aTextureCoord;
     attribute vec3 aVertexNormal;
+    attribute vec3 aVertexTangent;
+    attribute vec3 aVertexBitangent;
 
     uniform mat4 uProjectionMatrix;
     uniform mat4 uViewMatrix;
@@ -14,7 +16,7 @@ class PhongMaterial extends Material {
     // Shared with ps 
     varying lowp vec4 vColour; 
     varying highp vec2 vTextureCoord;
-    varying highp vec3 vNormal;
+    varying highp mat3 TBN;
     varying highp vec3 vFragPos;
 
     void main() {
@@ -23,7 +25,11 @@ class PhongMaterial extends Material {
         vFragPos = vec3(uModelMatrix * vec4(aVertexPosition, 1.0));
         vColour = aVertexColour;
         vTextureCoord = aTextureCoord;
-        vNormal = mat3(uNormalMatrix) * aVertexNormal;
+       
+        vec3 T = normalize(vec3(uNormalMatrix * vec4(aVertexTangent,   0.0)));
+        vec3 B = normalize(vec3(uNormalMatrix * vec4(aVertexBitangent, 0.0)));
+        vec3 N = normalize(vec3(uNormalMatrix * vec4(aVertexNormal,    0.0)));
+        TBN = mat3(T, B, N);
     }
     `;
 
@@ -31,10 +37,12 @@ class PhongMaterial extends Material {
     varying lowp vec4 vColour;
     varying highp vec2 vTextureCoord;
     varying highp vec3 vFragPos;
+    varying highp mat3 TBN;
     varying highp vec3 vNormal;
 
     uniform highp vec3 uViewPos;
     uniform sampler2D uColourSampler;
+    uniform sampler2D uNormalSampler;
 
     void main() {
         // Lighting params
@@ -44,11 +52,17 @@ class PhongMaterial extends Material {
         highp float specularStrength = 0.5;
         highp float objectShininess = 32.;
 
+        // obtain texture normal from normal map in range [0,1]
+        highp vec3 norm = texture2D(uNormalSampler, vTextureCoord).rgb;
+
+        // transform normal vector to range [-1,1]
+        norm = norm * 2.0 - 1.0;  
+        norm = normalize(TBN * norm); 
+     
         // Ambient
         highp vec3 ambient = ambientStrength * lightColour;
 
         // Diffuse
-        highp vec3 norm = normalize(vNormal);
         highp vec3 lightDir = normalize(lightPos - vFragPos); 
         highp float diffuse = max(dot(norm, lightDir), 0.0);
 
@@ -64,6 +78,6 @@ class PhongMaterial extends Material {
     }
     `;
 
-    super(gl, vsSource, fsSource, colourTexture);
+    super(gl, vsSource, fsSource, colourTexture, normalTexture);
   }
 }
