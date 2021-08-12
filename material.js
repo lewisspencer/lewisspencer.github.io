@@ -2,12 +2,16 @@ class VertexAttributes {
   postion;
   colour;
   normal;
+  tangent;
+  bitangent;
   uv;
 
   constructor(gl, shaderProgram) {
     this.postion = gl.getAttribLocation(shaderProgram, "aVertexPosition");
     this.colour = gl.getAttribLocation(shaderProgram, "aVertexColour");
     this.normal = gl.getAttribLocation(shaderProgram, "aVertexNormal");
+    this.tangent = gl.getAttribLocation(shaderProgram, "aVertexTangent");
+    this.bitangent = gl.getAttribLocation(shaderProgram, "aVertexBitangent");
     this.uv = gl.getAttribLocation(shaderProgram, "aTextureCoord");
   }
 }
@@ -19,7 +23,8 @@ class UniformLocation {
   modelMatrix;
   normalMatrix;
   viewPosition;
-  sampler;
+  colourSampler;
+  normalSampler;
 
   constructor(gl, shaderProgram) {
     this.projectionMatrix = gl.getUniformLocation(
@@ -30,7 +35,8 @@ class UniformLocation {
     this.modelMatrix = gl.getUniformLocation(shaderProgram, "uModelMatrix");
     this.normalMatrix = gl.getUniformLocation(shaderProgram, "uNormalMatrix");
     this.viewPosition = gl.getUniformLocation(shaderProgram, "uViewPos");
-    this.sampler = gl.getUniformLocation(shaderProgram, "uSampler");
+    this.colourSampler = gl.getUniformLocation(shaderProgram, "uColourSampler");
+    this.normalSampler = gl.getUniformLocation(shaderProgram, "uNormalSampler");
   }
 }
 
@@ -39,11 +45,19 @@ class Material {
   vertexAttributes;
   uniformLocation;
   colourTexture;
+  normalTexture;
 
-  constructor(gl, vsSource, fsSource, colourTexture) {
+  constructor(
+    gl,
+    vsSource,
+    fsSource,
+    colourTexture = null,
+    normalTexture = null
+  ) {
     this.shaderProgram = initShaderProgram(gl, vsSource, fsSource);
     this.vertexAttributes = new VertexAttributes(gl, this.shaderProgram);
     this.uniformLocation = new UniformLocation(gl, this.shaderProgram);
     this.colourTexture = colourTexture;
+    this.normalTexture = normalTexture;
   }
 }

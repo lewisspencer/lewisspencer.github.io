@@ -5,9 +5,11 @@ class Model {
   colours;
   uvs;
   normals;
+  tangents;
+  bitangents;
   indicesCount;
 
-  constructor(gl, vertices, indices, colours, uvs, normals) {
+  constructor(gl, vertices, indices, colours, uvs, normals, tangents, bitangents) {
     // Vertex buffer
     this.vertices = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.vertices);
@@ -37,6 +39,16 @@ class Model {
     this.normals = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.normals);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(normals), gl.STATIC_DRAW);
+
+    // Tangent buffer
+    this.tangents = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.tangents);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(tangents), gl.STATIC_DRAW);
+
+    // Bitangent buffer
+    this.bitangents = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, this.bitangents);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(bitangents), gl.STATIC_DRAW);
   }
 
   draw(gl, material, projectionMatrix, viewMatrix, modelMatrix, normalMatrix) {
@@ -124,6 +136,44 @@ class Model {
       gl.enableVertexAttribArray(material.vertexAttributes.normal);
     }
 
+     // Tell WebGL how to pull out the tangents from buffer
+     if (gl.getAttribLocation(material.shaderProgram, "aVertexTangent") != -1) {
+      const num = 3; // every coordinate composed of 2 values
+      const type = gl.FLOAT; // the data in the buffer is 32 bit float
+      const normalize = false; // don't normalize
+      const stride = 0; // how many bytes to get from one set to the next
+      const offset = 0; // how many bytes inside the buffer to start from
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.tangents);
+      gl.vertexAttribPointer(
+        material.vertexAttributes.tangent,
+        num,
+        type,
+        normalize,
+        stride,
+        offset
+      );
+      gl.enableVertexAttribArray(material.vertexAttributes.tangent);
+    }
+
+     // Tell WebGL how to pull out the Bitangent from buffer
+     if (gl.getAttribLocation(material.shaderProgram, "aVertexBitangent") != -1) {
+      const num = 3; // every coordinate composed of 2 values
+      const type = gl.FLOAT; // the data in the buffer is 32 bit float
+      const normalize = false; // don't normalize
+      const stride = 0; // how many bytes to get from one set to the next
+      const offset = 0; // how many bytes inside the buffer to start from
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.bitangents);
+      gl.vertexAttribPointer(
+        material.vertexAttributes.bitangent,
+        num,
+        type,
+        normalize,
+        stride,
+        offset
+      );
+      gl.enableVertexAttribArray(material.vertexAttributes.bitangent);
+    }
+
     // Tell WebGL to use our program when drawing
     gl.useProgram(material.shaderProgram);
 
@@ -150,16 +200,31 @@ class Model {
     gl.uniform3fv(material.uniformLocation.viewPosition, viewPositon);
 
     // Tell WebGL we want to affect texture unit 0
-    gl.activeTexture(gl.TEXTURE0);
 
     // Bind the texture to texture unit 0
-    if (material.colourTexture.isCubeMap) {
-      gl.bindTexture(gl.TEXTURE_CUBE_MAP, material.colourTexture.texture);
-    } else {
-      gl.bindTexture(gl.TEXTURE_2D, material.colourTexture.texture);
+    if (material.colourTexture !== null) {
+      gl.activeTexture(gl.TEXTURE0);
+
+      if (material.colourTexture.isCubeMap) {
+        gl.bindTexture(gl.TEXTURE_CUBE_MAP, material.colourTexture.texture);
+      } else {
+        gl.bindTexture(gl.TEXTURE_2D, material.colourTexture.texture);
+      }
+      // Tell the shader we bound the texture to texture unit 0
+      gl.uniform1i(material.uniformLocation.colourSampler, 0);
     }
-    // Tell the shader we bound the texture to texture unit 0
-    gl.uniform1i(material.uniformLocation.sampler, 0);
+
+    if (material.normalTexture !== null) {
+      gl.activeTexture(gl.TEXTURE1);
+
+      if (material.normalTexture.isCubeMap) {
+        gl.bindTexture(gl.TEXTURE_CUBE_MAP, material.normalTexture.texture);
+      } else {
+        gl.bindTexture(gl.TEXTURE_2D, material.normalTexture.texture);
+      }
+      // Tell the shader we bound the texture to texture unit 1
+      gl.uniform1i(material.uniformLocation.normalSampler, 1);
+    }
 
     // Render to the buffer
     {

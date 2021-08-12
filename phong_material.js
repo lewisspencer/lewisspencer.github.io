@@ -34,13 +34,13 @@ class PhongMaterial extends Material {
     varying highp vec3 vNormal;
 
     uniform highp vec3 uViewPos;
-    uniform sampler2D uSampler;
-    
+    uniform sampler2D uColourSampler;
+
     void main() {
         // Lighting params
         highp vec3 lightColour = vec3(1, 1, 1);
         highp vec3 lightPos = vec3(0, 10, 0);
-        highp float ambientStrength = 0.1;
+        highp float ambientStrength = 0.3;
         highp float specularStrength = 0.5;
         highp float objectShininess = 32.;
 
@@ -57,7 +57,7 @@ class PhongMaterial extends Material {
         highp vec3 reflectDir = reflect(-lightDir, norm);  
         highp float specPower = pow(max(dot(viewDir, reflectDir), 0.0), objectShininess);
         highp vec3 specular = specularStrength * specPower * lightColour;  
-        highp vec4 texelColor = texture2D(uSampler, vTextureCoord);
+        highp vec4 texelColor = texture2D(uColourSampler, vTextureCoord);
 
         highp vec3 result = (ambient + diffuse + specular) * texelColor.rgb;
         gl_FragColor = vec4(result, 1.0);
