@@ -3,7 +3,7 @@ class RotatingCube extends Actor {
     const cube = new Cube(gl);
     const phongMaterial = new PhongMaterial(
       gl,
-      loadTexture(gl, "https://i.imgur.com/ArXY8zX.jpeg")
+      loadTexture(gl, "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/brick.jpg")
     );
     super(cube, phongMaterial);
   }
@@ -20,7 +20,7 @@ class StaticCube extends Actor {
     const cube = new Cube(gl);
     const phongMaterial = new PhongMaterial(
       gl,
-      loadTexture(gl, "textures/wood.jpg")
+      loadTexture(gl, "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/wood.jpg")
     );
     super(cube, phongMaterial);
   }
@@ -30,12 +30,12 @@ class SkyBox extends Actor {
   constructor(gl) {
     const cube = new Cube(gl);
     var urls = [
-      "textures/right.jpg",
-      "textures/left.jpg",
-      "textures/top.jpg",
-      "textures/bottom.jpg",
-      "textures/front.jpg",
-      "textures/back.jpg",
+      "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/right.jpg",
+      "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/left.jpg",
+      "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/top.jpg",
+      "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/bottom.jpg",
+      "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/front.jpg",
+      "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/back.jpg",
     ];
 
     const skyBoxMaterial = new SkyBoxMaterial(gl, loadCubemapTexture(gl, urls));

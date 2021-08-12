@@ -8,6 +8,12 @@ class Texture {
   }
 }
 
+function requestCORSIfNotSameOrigin(img, url) {
+  if ((new URL(url, window.location.href)).origin !== window.location.origin) {
+    img.crossOrigin = "";
+  }
+}
+
 function loadTexture(gl, url) {
   const texture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -77,6 +83,7 @@ function loadTexture(gl, url) {
       gl.texParameterf(gl.TEXTURE_2D, ext.TEXTURE_MAX_ANISOTROPY_EXT, max);
     }
   };
+  requestCORSIfNotSameOrigin(image, url);
   image.src = url;
 
   return new Texture(texture, false);
@@ -145,6 +152,7 @@ function loadCubemapTexture(gl, urls) {
         gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       }
     };
+    requestCORSIfNotSameOrigin(image, urls[i]);
     image.src = urls[i];
   }
 
