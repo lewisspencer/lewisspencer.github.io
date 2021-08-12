@@ -3,7 +3,7 @@ class RotatingCube extends Actor {
     const cube = new Cube(gl);
     const phongMaterial = new PhongMaterial(
       gl,
-      loadTexture(gl, "textures/brick.jpg")
+      loadTexture(gl, "https://i.imgur.com/ArXY8zX.jpeg")
     );
     super(cube, phongMaterial);
   }
