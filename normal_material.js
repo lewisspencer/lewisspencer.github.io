@@ -40,7 +40,7 @@ class NormalMaterial extends Material {
     varying highp mat3 TBN;
     varying highp vec3 vNormal;
 
-    uniform highp vec3 uViewPos;
+    uniform highp vec3 uCameraPos;
     uniform sampler2D uColourSampler;
     uniform sampler2D uNormalSampler;
 
@@ -67,7 +67,7 @@ class NormalMaterial extends Material {
         highp float diffuse = max(dot(norm, lightDir), 0.0);
 
         // Specular
-        highp vec3 viewDir = normalize(uViewPos - vFragPos);
+        highp vec3 viewDir = normalize(uCameraPos - vFragPos);
         highp vec3 reflectDir = reflect(-lightDir, norm);  
         highp float specPower = pow(max(dot(viewDir, reflectDir), 0.0), objectShininess);
         highp vec3 specular = specularStrength * specPower * lightColour;  

@@ -22,7 +22,7 @@ class UniformLocation {
   viewMatrix;
   modelMatrix;
   normalMatrix;
-  viewPosition;
+  cameraPosition;
   colourSampler;
   normalSampler;
 
@@ -34,7 +34,7 @@ class UniformLocation {
     this.viewMatrix = gl.getUniformLocation(shaderProgram, "uViewMatrix");
     this.modelMatrix = gl.getUniformLocation(shaderProgram, "uModelMatrix");
     this.normalMatrix = gl.getUniformLocation(shaderProgram, "uNormalMatrix");
-    this.viewPosition = gl.getUniformLocation(shaderProgram, "uViewPos");
+    this.cameraPosition = gl.getUniformLocation(shaderProgram, "uCameraPos");
     this.colourSampler = gl.getUniformLocation(shaderProgram, "uColourSampler");
     this.normalSampler = gl.getUniformLocation(shaderProgram, "uNormalSampler");
   }

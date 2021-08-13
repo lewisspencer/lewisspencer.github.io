@@ -51,7 +51,7 @@ class Model {
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(bitangents), gl.STATIC_DRAW);
   }
 
-  draw(gl, material, projectionMatrix, viewMatrix, modelMatrix, normalMatrix) {
+  draw(gl, material, projectionMatrix, viewMatrix, cameraPosition, modelMatrix, normalMatrix) {
     // Tell WebGL how to pull out the positions from the position
     // buffer into the vertexPosition attribute.
     {
@@ -195,9 +195,7 @@ class Model {
       normalMatrix
     );
 
-    var viewPositon = vec3.create();
-    mat4.getTranslation(viewPositon, viewMatrix);
-    gl.uniform3fv(material.uniformLocation.viewPosition, viewPositon);
+    gl.uniform3fv(material.uniformLocation.cameraPosition, cameraPosition);
 
     // Tell WebGL we want to affect texture unit 0
 

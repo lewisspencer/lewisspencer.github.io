@@ -34,12 +34,13 @@ class Actor {
 
   tick(deltaTime) {}
 
-  draw(gl, projectionMatrix, viewMatrix) {
+  draw(gl, projectionMatrix, viewMatrix, cameraPosition) {
     this.model.draw(
       gl,
       this.material,
       projectionMatrix,
       viewMatrix,
+      cameraPosition,
       this.modelMatrix,
       this.normalMatrix
     );
