@@ -1424,16 +1424,19 @@ function main() {
   }
 
   var actors = [
-    new RotatingCube(gl),
+    new RotatingCubePhong(gl),
     new RotatingCubeNormalMapping(gl),
+    new RotatingCubeReflectionMapping(gl),
     new StaticCube(gl),
     new SkyBox(gl),
   ];
-  actors[0].position = [-2, 0, 0];
-  actors[1].position = [2, 0, 0];
-  actors[2].position = [0, -3, 0];
-  actors[2].scale = [10, 0.2, 10];
-  actors[3].scale = [1000, 1000, 1000];
+
+  actors[0].position = [-4, 0, 0];
+  actors[1].position = [0, 0, 0];
+  actors[2].position = [4, 0, 0];
+  actors[3].position = [0, -3, 0];
+  actors[3].scale = [10, 0.2, 10];
+  actors[4].scale = [1000, 1000, 1000];
 
   var camera = createPerspectiveCamera({
     position: [0, 0, 5],
@@ -1467,8 +1470,8 @@ function main() {
     }
 
     clearScene(gl);
-    for (let actor of actors) {
-      actor.draw(gl, camera.projectionMatrix, camera.viewMatrix);
+    for (let actor of actors) {    
+      actor.draw(gl, camera.projectionMatrix, camera.viewMatrix, camera.position);
     }
     requestAnimationFrame(render);
   }

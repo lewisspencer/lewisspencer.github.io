@@ -1,4 +1,12 @@
 class RotatingCube extends Actor {
+   tick(deltaTime) {
+    const rotationFactor = 0.3;
+    quat.rotateY(this.rotation, this.rotation, deltaTime * rotationFactor);
+    quat.rotateX(this.rotation, this.rotation, deltaTime * rotationFactor);
+  }
+}
+
+class RotatingCubePhong extends RotatingCube {
   constructor(gl) {
     const cube = new Cube(gl);
     const phongMaterial = new PhongMaterial(
@@ -7,15 +15,10 @@ class RotatingCube extends Actor {
     );
     super(cube, phongMaterial);
   }
-
-  tick(deltaTime) {
-    const rotationFactor = 0.3;
-    quat.rotateY(this.rotation, this.rotation, deltaTime * rotationFactor);
-    quat.rotateX(this.rotation, this.rotation, deltaTime * rotationFactor);
-  }
 }
 
-class RotatingCubeNormalMapping extends Actor {
+
+class RotatingCubeNormalMapping extends RotatingCube {
   constructor(gl) {
     const cube = new Cube(gl);
     const normalMaterial = new NormalMaterial(
@@ -25,11 +28,23 @@ class RotatingCubeNormalMapping extends Actor {
     );
     super(cube, normalMaterial);
   }
+}
 
-  tick(deltaTime) {
-    const rotationFactor = 0.3;
-    quat.rotateY(this.rotation, this.rotation, deltaTime * rotationFactor);
-    quat.rotateX(this.rotation, this.rotation, deltaTime * rotationFactor);
+
+class RotatingCubeReflectionMapping extends Actor {
+  constructor(gl) {
+    const cube = new Cube(gl);
+  
+    var urls = [
+      "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/right.jpg",
+      "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/left.jpg",
+      "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/top.jpg",
+      "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/bottom.jpg",
+      "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/front.jpg",
+      "https://media.githubusercontent.com/media/lewisspencer/lewisspencer.github.io/main/textures/back.jpg",
+    ];
+    const reflectionMappingMaterial = new ReflectionMappingMaterial(gl, loadCubemapTexture(gl, urls));
+    super(cube, reflectionMappingMaterial);
   }
 }
 
