@@ -107,46 +107,46 @@
       <a href="https://youtu.be/zqrON6-boC8" target="_blank">Showreel</a>
     </div>
   </div>
+  <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        videoId: 'zqrON6-boC8',
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          controls: 0,
+          loop: 1,
+          playlist: 'zqrON6-boC8',
+          modestbranding: 1,
+          showinfo: 0,
+          rel: 0
+        },
+        events: {
+          onReady: function (event) {
+            event.target.setPlaybackQuality('highres');
+            event.target.playVideo();
+          }
+        }
+      });
+
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible' && player && player.setPlaybackQuality) {
+          player.setPlaybackQuality('highres');
+          if (player.getPlayerState && player.getPlayerState() !== 1) {
+            player.playVideo();
+          }
+        }
+      });
+    }
+  </script>
 </body>
-<script>
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  var player;
-
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      videoId: 'zqrON6-boC8',
-      playerVars: {
-        autoplay: 1,
-        mute: 1,
-        controls: 0,
-        loop: 1,
-        playlist: 'zqrON6-boC8',
-        modestbranding: 1,
-        showinfo: 0,
-        rel: 0
-      },
-      events: {
-        onReady: function (event) {
-          event.target.setPlaybackQuality('highres');
-          event.target.playVideo();
-        }
-      }
-    });
-
-    document.addEventListener('visibilitychange', function () {
-      if (document.visibilityState === 'visible' && player && player.setPlaybackQuality) {
-        player.setPlaybackQuality('highres');
-        if (player.getPlayerState && player.getPlayerState() !== 1) {
-          player.playVideo();
-        }
-      }
-    });
-  }
-</script>
 
 </html>
