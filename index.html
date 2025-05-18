@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Lewis Spencer – Senior Unreal Engineer</title>
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family:  Arial, sans-serif;
+      font-family: Arial, sans-serif;
       overflow: hidden;
       color: white;
     }
-	
-	#player {
-	  width: 100vw;
-      height: 56.25vw; /* 16:9 aspect ratio */
+
+    #player {
+      width: 100vw;
+      height: 56.25vw;
+      /* 16:9 aspect ratio */
       min-height: 100vh;
       min-width: 177.77vh;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-	  pointer-events: none;
-	}
+      pointer-events: none;
+    }
 
     .content {
-	  display: inline-block;
+      display: inline-block;
       padding: 20px 10px 20px 20px;
       background: #ffffff55;
-	  color: white;
+      color: white;
       text-decoration: none;
       border-radius: 10px;
       position: absolute;
-	  backdrop-filter: blur(10px);
-	  -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       top: 30px;
       left: 30px;
       max-width: 650px;
@@ -43,7 +46,7 @@
     h1 {
       font-size: 3.0rem;
       margin: 0 0 10px;
-	  color: #008080FF;
+      color: #008080FF;
     }
 
     p {
@@ -52,21 +55,21 @@
       line-height: 1.5;
     }
 
-	.profile {
-	  display: flex;
-	  align-items: center;
-	  gap: 20px;
-	  padding-bottom: 10px;
-	}
-	
-	.profile img {
-	  width: 100px;
-	  height: 100px;
-	  object-fit: cover;
-	  border-radius: 50%;
-	  border: 2px solid white;
-	}
-	
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding-bottom: 10px;
+    }
+
+    .profile img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
     .links a {
       display: inline-block;
       margin-right: 15px;
@@ -83,34 +86,37 @@
     }
   </style>
 </head>
+
 <body>
   <div id="player"></div>
 
   <div class="content">
     <div class="profile">
-	 <img src="content/headshot2.jpg" alt="Lewis Spencer">
-   	 <h1>Lewis Spencer, M.Eng</h1>
-	</div>
+      <img src="content/headshot2.jpg" alt="Lewis Spencer">
+      <h1>Lewis Spencer, M.Eng</h1>
+    </div>
     <p>
-     A versatile and results-driven senior engineer with a proven track record of delivering high-impact solutions across a wide range of industries, from broadcast AR/VR graphics to digital twins and robotic simulations.
-	 I thrive in small, fast-paced teams, combing technical depth with creative problem-solving to bring complex ideas to life.
+      A versatile and results-driven senior engineer with a proven track record of delivering high-impact solutions
+      across a wide range of industries, from broadcast AR/VR graphics to digital twins and robotic simulations.
+      I thrive in small, fast-paced teams, combing technical depth with creative problem-solving to bring complex ideas
+      to life.
     </p>
     <div class="links">
       <a href="content/Lewis_Spencer_CV_2025.pdf" target="_blank">View My CV</a>
       <a href="https://www.linkedin.com/in/lewismspencer" target="_blank">LinkedIn</a>
-	  <a href="https://youtu.be/zqrON6-boC8" target="_blank">Showreel</a>
+      <a href="https://youtu.be/zqrON6-boC8" target="_blank">Showreel</a>
     </div>
   </div>
 </body>
 <script>
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/iframe_api";
-  
+
   var firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
   var player;
-  
+
   function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
       videoId: 'zqrON6-boC8',
@@ -131,7 +137,7 @@
         }
       }
     });
-	
+
     document.addEventListener('visibilitychange', function () {
       if (document.visibilityState === 'visible' && player && player.setPlaybackQuality) {
         player.setPlaybackQuality('highres');
@@ -142,4 +148,5 @@
     });
   }
 </script>
+
 </html>
